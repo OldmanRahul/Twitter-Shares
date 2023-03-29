@@ -8,13 +8,17 @@ import os
 openai.api_key = os.environ.get('KMVAR_OPENAI_API_KEY')
 
 # Get text from clipboard
-text = pyperclip.paste()
+highlightedText = pyperclip.paste()
+
+# Prompt Specifics
+systemMessage = "You are an excellent summarizer."
+promptTemplate = f"Summarize the following: {highlightedText}"
 
 response = openai.ChatCompletion.create(
   model="gpt-3.5-turbo",
   messages=[
-        {"role": "system", "content": "You are an excellent summarizer."},
-        {"role": "user", "content": f"Summarize the following: {text}"}
+        {"role": "system", "content": systemMessage},
+        {"role": "user", "content": promptTemplate}
     ]
 )
 
